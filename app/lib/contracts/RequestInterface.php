@@ -10,5 +10,29 @@ namespace app\lib\contracts;
 
 
 interface RequestInterface {
+    /**
+     * @return mixed
+     */
+    public function getController();
+
+    /**
+     * @return string
+     */
+    public function getMethod();
+
+    /**
+     * @return array
+     */
+    public function getUrlElements();
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod();
+
+    /**
+     * @return mixed
+     */
+    public function getParameters();
 
 }

@@ -8,6 +8,8 @@
 
 namespace app\lib;
 
+use app\lib\contracts\RequestInterface;
+require_once 'app/lib/contracts/RequestInterface.php';
 
 class JsonRequest implements RequestInterface
 {

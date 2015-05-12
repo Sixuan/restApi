@@ -4,6 +4,7 @@ require_once 'vendor/autoload.php';
 use app\lib\RequestFactory;
 
 
+
 $controller =  new \app\controllers\InfoController();
 $controller->get();
 

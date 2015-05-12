@@ -10,6 +10,7 @@ namespace app\lib;
 
 
 use app\lib\contracts\ResponseInterface;
+require_once 'app/lib/contracts/ResponseInterface.php';
 
 class JsonResponse implements ResponseInterface{
 
