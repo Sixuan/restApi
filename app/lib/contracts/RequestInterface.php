@@ -3,34 +3,12 @@
  * Created by PhpStorm.
  * User: sixuan
  * Date: 5/11/15
- * Time: 10:47 PM
+ * Time: 11:16 PM
  */
-namespace app\lib;
 
-interface RequestInterface
-{
-    /**
-     * @return mixed
-     */
-    public function getController();
+namespace app\lib\contracts;
 
-    /**
-     * @return string
-     */
-    public function getMethod();
 
-    /**
-     * @return array
-     */
-    public function getUrlElements();
+interface RequestInterface {
 
-    /**
-     * @return string
-     */
-    public function getRequestMethod();
-
-    /**
-     * @return mixed
-     */
-    public function getParameters();
 }
