@@ -9,7 +9,8 @@
 namespace app\lib;
 
 
-class Request {
+class JsonRequest implements RequestInterface
+{
 
     private $requestMethod;
 
@@ -18,17 +19,20 @@ class Request {
     private $controller;
 
     private $method;
+    
+    private $requestArray;
 
-    function __construct(array $server)
+    function __construct(array $requestArray)
     {
-
-        if (isset($server['REQUEST_URI'])) {
-            $this->url_elements = explode('/', trim($server['REQUEST_URI'], '/'));
+        $this->requestArray = $requestArray;
+        
+        if (isset($requestArray['REQUEST_URI'])) {
+            $this->url_elements = explode('/', trim($requestArray['REQUEST_URI'], '/'));
             print_r($this->url_elements);
             $this->controller = $this->url_elements[1];
         }
 
-        $this->requestMethod = strtoupper($server['REQUEST_METHOD']);
+        $this->requestMethod = strtoupper($requestArray['REQUEST_METHOD']);
 
         switch ($this->requestMethod) {
             case 'GET':
