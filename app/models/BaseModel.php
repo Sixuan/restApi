@@ -1,6 +1,13 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: sixuan
+ * Date: 5/11/15
+ * Time: 10:20 PM
+ */
 
 namespace app\models;
+use app\config\GlobalConfig;
 
 abstract class BaseModel {
 
