@@ -9,6 +9,8 @@
 namespace app\lib;
 
 
+use app\lib\contracts\RequestInterface;
+
 class RequestFactory {
 
     const TYPE_JSON = 'json';
