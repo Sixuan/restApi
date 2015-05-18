@@ -63,4 +63,12 @@ class ObjectRequest implements RequestInterface{
         // TODO: Implement getParameters() method.
     }
 
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        // TODO: Implement getData() method.
+    }
+
 }

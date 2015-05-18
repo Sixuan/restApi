@@ -7,7 +7,7 @@
  */
 
 namespace app\controllers;
-
+use app\lib\JsonResponse;
 
 class BaseController {
 
@@ -19,8 +19,24 @@ class BaseController {
     const STATUS_CODE_METHOD_NOT_ALLOWED = 405;
     const STATUS_CODE_ERROR = 500;
 
-    protected function buildResponse($code, array $message) {
 
+    /**
+     * @param $code
+     * @param array $message
+     * @param array $data
+     * @return JsonResponse
+     */
+    protected function buildResponse($code, array $message, array $data) {
+        if(sizeof($message) == 0 && $code == self::STATUS_CODE_SUCCESS){
+            $message[] = array(
+                'status'    => 'request_success'
+            );
+        }else{
+            $message[] = array(
+                'status'    => 'request_failed'
+            );
+        }
+        return new JsonResponse($code, $message, $data);
     }
 
 }

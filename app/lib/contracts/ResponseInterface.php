@@ -10,6 +10,7 @@ namespace app\lib\contracts;
 
 
 interface ResponseInterface {
+
     public function getCode();
-    public function getResponse();
+    public function getData();
 }
