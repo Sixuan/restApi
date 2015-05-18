@@ -18,6 +18,8 @@ class JsonRequest implements RequestInterface
 
     private $parameters;
 
+    private $data;
+
     private $controller;
 
     private $method;
@@ -27,11 +29,11 @@ class JsonRequest implements RequestInterface
     function __construct(array $requestArray)
     {
         $this->requestArray = $requestArray;
-        
+
         if (isset($requestArray['REQUEST_URI'])) {
             $this->url_elements = explode('/', trim($requestArray['REQUEST_URI'], '/'));
-            print_r($this->url_elements);
-            $this->controller = $this->url_elements[1];
+            $this->controller = '\app\controllers\\';
+            $this->controller  .= ucfirst($this->url_elements[1]).'Controller';
         }
 
         $this->requestMethod = strtoupper($requestArray['REQUEST_METHOD']);
@@ -42,7 +44,10 @@ class JsonRequest implements RequestInterface
                 $this->method = 'get';
                 break;
             case 'POST':
-                $this->parameters = $_POST;
+                $this->parameters = $_GET;
+                //$this->data = parse_str(file_get_contents('php://input'), $this->parameters);;
+                print_r(file_get_contents("php://input"));
+                die();
                 $this->method = 'store';
                 break;
             case 'DELETE':
@@ -94,6 +99,14 @@ class JsonRequest implements RequestInterface
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
 

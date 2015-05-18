@@ -11,13 +11,30 @@ use app\config\GlobalConfig;
 
 abstract class BaseModel {
 
+    /**
+     * @var \mysqli
+     */
     protected $db;
+
 
     function __construct()
     {
         $dbConfig = GlobalConfig::getDatabaseConfig();
-        $this->db = new PDO($dbConfig['mysql']['hostname'],
-            $dbConfig['mysql']['user'],
-            $dbConfig['mysql']['password']);
+        try{
+            $this->db = new \mysqli($dbConfig['mysql']['hostname'],$dbConfig['mysql']['user'],$dbConfig['mysql']['password'],$dbConfig['mysql']['databse']);
+        }catch (\Exception $e){
+            print (string)$e;
+        }
+
     }
+
+    /**
+     * @return \mysqli
+     */
+    public function getDb()
+    {
+        return $this->db;
+    }
+
+
 }

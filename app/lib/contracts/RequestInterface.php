@@ -35,4 +35,9 @@ interface RequestInterface {
      */
     public function getParameters();
 
+    /**
+     * @return mixed
+     */
+    public function getData();
+
 }

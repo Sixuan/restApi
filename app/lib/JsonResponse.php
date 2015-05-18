@@ -12,20 +12,65 @@ namespace app\lib;
 use app\lib\contracts\ResponseInterface;
 require_once 'app/lib/contracts/ResponseInterface.php';
 
-class JsonResponse implements ResponseInterface{
+class JsonResponse implements \JsonSerializable, ResponseInterface{
 
+
+    /**
+     * @var int
+     */
     private $code;
-
+    /**
+     * @var array
+     */
     private $message;
 
-    public function getCode()
+    /**
+     * @var array
+     */
+    private $data;
+
+    function __construct($code, array $message, array $data)
     {
-        // TODO: Implement getCode() method.
+        $this->code = $code;
+        $this->message = $message;
+        $this->data = $data;
     }
 
-    public function getResponse()
+    /**
+     * @return int
+     */
+    public function getCode()
     {
-        // TODO: Implement getResponse() method.
+        return $this->code;
     }
+
+    /**
+     * @return array
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+
+
+
+    function jsonSerialize()
+    {
+        return array(
+            'code' => $this->code,
+            'message'   => $this->message,
+            'data'  => $this->data
+        );
+    }
+
 
 }
