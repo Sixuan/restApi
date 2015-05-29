@@ -1,6 +1,7 @@
 <?php
 
 require_once 'vendor/autoload.php';
+require_once 'app/lib/RequestFactory.php';
 use app\lib\RequestFactory;
 
 //Create Request
@@ -12,5 +13,7 @@ $method = $request->getMethod();
 $controllerObj = new $controller();
 //Execute the request
 $response = $controllerObj->$method($request->getData());
+
+echo json_encode($response);
 
 ?>

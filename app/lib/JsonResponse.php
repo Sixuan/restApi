@@ -7,8 +7,6 @@
  */
 
 namespace app\lib;
-
-
 use app\lib\contracts\ResponseInterface;
 require_once 'app/lib/contracts/ResponseInterface.php';
 
@@ -19,6 +17,11 @@ class JsonResponse implements \JsonSerializable, ResponseInterface{
      * @var int
      */
     private $code;
+
+    /**
+     * @var string
+     */
+    private $status;
     /**
      * @var array
      */
@@ -29,9 +32,10 @@ class JsonResponse implements \JsonSerializable, ResponseInterface{
      */
     private $data;
 
-    function __construct($code, array $message, array $data)
+    function __construct($code, $status, array $message, array $data)
     {
         $this->code = $code;
+        $this->status = $status;
         $this->message = $message;
         $this->data = $data;
     }
@@ -60,13 +64,19 @@ class JsonResponse implements \JsonSerializable, ResponseInterface{
         return $this->data;
     }
 
-
-
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
     function jsonSerialize()
     {
         return array(
             'code' => $this->code,
+            'status'    => $this->status,
             'message'   => $this->message,
             'data'  => $this->data
         );

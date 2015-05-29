@@ -46,8 +46,7 @@ class JsonRequest implements RequestInterface
             case 'POST':
                 $this->parameters = $_GET;
                 //$this->data = parse_str(file_get_contents('php://input'), $this->parameters);;
-                print_r(file_get_contents("php://input"));
-                die();
+                $this->data = (file_get_contents("php://input"));
                 $this->method = 'store';
                 break;
             case 'DELETE':

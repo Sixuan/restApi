@@ -27,13 +27,13 @@ class InfoController extends BaseController{
     public function store($data) {
 
         $insert = $this->getInfoModel()->insertCountHeatmap($data);
-        print_r($data);
-        die();
         if(true === $insert){
-            return $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), array());
+            $response = $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), array());
         }else{
-            return $this->buildResponse(self::STATUS_CODE_BAD_REQUEST, array(), array());
+            $response = $this->buildResponse(self::STATUS_CODE_BAD_REQUEST, array(), array());
         }
+
+        return $response;
     }
 
     public function remove() {

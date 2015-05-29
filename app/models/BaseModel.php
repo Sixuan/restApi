@@ -16,12 +16,18 @@ abstract class BaseModel {
      */
     protected $db;
 
+    /**
+     * @var \MysqliDb
+     */
+    protected $sql;
+
 
     function __construct()
     {
         $dbConfig = GlobalConfig::getDatabaseConfig();
         try{
-            $this->db = new \mysqli($dbConfig['mysql']['hostname'],$dbConfig['mysql']['user'],$dbConfig['mysql']['password'],$dbConfig['mysql']['databse']);
+            $this->db = new \mysqli($dbConfig['mysql']['hostname'],$dbConfig['mysql']['user'],$dbConfig['mysql']['password'],$dbConfig['mysql']['database']);
+            $this->db = new \MysqliDb ($dbConfig['mysql']['hostname'], $dbConfig['mysql']['user'], $dbConfig['mysql']['password'], $dbConfig['mysql']['database']);
         }catch (\Exception $e){
             print (string)$e;
         }
@@ -36,5 +42,14 @@ abstract class BaseModel {
         return $this->db;
     }
 
-
+    /**
+     * @return \MysqliDb
+     */
+    public function getSql() {
+        $dbConfig = GlobalConfig::getDatabaseConfig();
+        if($this->sql == null){
+            $this->sql = new \MysqliDb ($dbConfig['mysql']['hostname'], $dbConfig['mysql']['user'], $dbConfig['mysql']['password'], $dbConfig['mysql']['database']);
+        }
+        return $this->sql;
+    }
 }
