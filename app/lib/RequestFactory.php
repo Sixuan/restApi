@@ -7,8 +7,7 @@
  */
 
 namespace app\lib;
-
-
+require_once 'JsonRequest.php';
 use app\lib\contracts\RequestInterface;
 
 class RequestFactory {

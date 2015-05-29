@@ -28,15 +28,12 @@ class BaseController {
      */
     protected function buildResponse($code, array $message, array $data) {
         if(sizeof($message) == 0 && $code == self::STATUS_CODE_SUCCESS){
-            $message[] = array(
-                'status'    => 'request_success'
-            );
+            $status = 'request_success';
+
         }else{
-            $message[] = array(
-                'status'    => 'request_failed'
-            );
+            $status = 'request_failed';
         }
-        return new JsonResponse($code, $message, $data);
+        return new JsonResponse($code, $status, $message, $data);
     }
 
 }
