@@ -21,13 +21,18 @@ class InfoController extends BaseController{
     private $infoModel = null;
 
     public function get() {
-        echo 'get';
+
+        $type = isset($_GET['type']) ? $_GET['type'] : 'day';
+        $company_id = isset($_GET['company_id']) ? $_GET['company_id'] : 1;
+        $info = $this->getInfoModel()->getVisitCount($company_id, $type);
+
+        return $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), $info);
     }
 
     public function store($data) {
 
         $insert = $this->getInfoModel()->insertCountHeatmap($data);
-        if(true === $insert){
+        if(true == $insert){
             $response = $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), array());
         }else{
             $response = $this->buildResponse(self::STATUS_CODE_BAD_REQUEST, array(), array());

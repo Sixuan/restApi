@@ -26,7 +26,7 @@ abstract class BaseModel {
     {
         $dbConfig = GlobalConfig::getDatabaseConfig();
         try{
-            $this->db = new \mysqli($dbConfig['mysql']['hostname'],$dbConfig['mysql']['user'],$dbConfig['mysql']['password'],$dbConfig['mysql']['database']);
+            //$this->db = new \mysqli($dbConfig['mysql']['hostname'],$dbConfig['mysql']['user'],$dbConfig['mysql']['password'],$dbConfig['mysql']['database']);
             $this->db = new \MysqliDb ($dbConfig['mysql']['hostname'], $dbConfig['mysql']['user'], $dbConfig['mysql']['password'], $dbConfig['mysql']['database']);
         }catch (\Exception $e){
             print (string)$e;
