@@ -22,7 +22,11 @@ class InfoController extends BaseController{
 
     public function get() {
 
-        echo "hello";
+        $type = isset($_GET['type']) ? $_GET['type'] : 'day';
+        $company_id = isset($_GET['company_id']) ? $_GET['company_id'] : 1;
+        $info = $this->getInfoModel()->getVisitCount($company_id, $type);
+
+        return $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), $info);
     }
 
     public function store($data) {
@@ -36,8 +40,6 @@ class InfoController extends BaseController{
 
         return $response;
     }
-
-
 
     public function remove() {
         echo 'delete';
