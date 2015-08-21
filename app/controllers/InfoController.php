@@ -12,6 +12,7 @@ namespace app\controllers;
 use app\lib\contracts\ResponseInterface;
 use app\lib\JsonResponse;
 use app\models\InfoModel;
+use lib\ApiException;
 
 class InfoController extends BaseController{
 
@@ -31,11 +32,15 @@ class InfoController extends BaseController{
 
     public function store($data) {
 
-        $insert = $this->getInfoModel()->insertCountHeatmap($data);
-        if(true == $insert){
-            $response = $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), array());
-        }else{
-            $response = $this->buildResponse(self::STATUS_CODE_BAD_REQUEST, array(), array());
+        try{
+            $insert = $this->getInfoModel()->insertCountHeatmap($data);
+            if(true == $insert){
+                $response = $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), array());
+            }else{
+                $response = $this->buildResponse(self::STATUS_CODE_BAD_REQUEST, array(), array());
+            }
+        }catch (ApiException $e){
+            $response = $this->buildResponse(self::STATUS_CODE_BAD_REQUEST, array('exception' => (string)$e), array());
         }
 
         return $response;

@@ -9,6 +9,8 @@
 namespace app\models;
 
 
+use lib\ApiException;
+
 class InfoModel extends BaseModel{
 
 
@@ -16,9 +18,13 @@ class InfoModel extends BaseModel{
 
         $data = json_decode($data);
 
+        if(!isset($data->device_id)){
+            throw new ApiException('Device id is not defined.', array('data' => $data));
+        }
+
         $insert = Array (
             "DEVICE_ID" => $data->device_id,
-            "NUM" => $data->count,
+            "NUM" => $data->count
         );
 
         $heat_map = $data->heat_map;
