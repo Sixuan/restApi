@@ -13,6 +13,7 @@ $method = $request->getMethod();
 $controllerObj = new $controller();
 //Execute the request
 $response = $controllerObj->$method($request->getData());
+header('Content-Type: application/json');
 
 echo json_encode($response);
 
