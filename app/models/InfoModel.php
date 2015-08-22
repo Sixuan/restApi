@@ -60,9 +60,35 @@ class InfoModel extends BaseModel{
 
         $db = $this->getSql();
 
-        $users = $db->rawQuery($query);
+        $heat_map = $db->rawQuery($query);
 
-        return $users;
+        return $heat_map;
+    }
+
+    public function getHeatMapForDevice($company_id, $timestamp, $device_id) {
+        $time = date('Y-m-d H:i:s', $timestamp);
+        $apiConfig = $this->getApiConfig();
+        $time_one_hour_ago = date('Y-m-d H:i:s', ($timestamp - $apiConfig['heatmap']['threshold']));
+        $query = "SELECT
+                            POSITION_X,
+                            POSITION_Y,
+                            POSITION_VALUE,
+                            H.TIME_CREATED,
+                            H.DEVICE_ID
+                            FROM HEAT_MAP_DATA H
+                            JOIN DEVICE D ON (H.DEVICE_ID = D.DEVICE_ID)
+                            WHERE D.COMPANY_ID = ".(int)$company_id."
+                            AND TIME_CREATED BETWEEN '".$time_one_hour_ago."'
+                            AND '".$time."'
+                            AND H.ACTIVE = 'Y'
+                            AND H.DEVICE_ID =".(int)$device_id;
+
+        $db = $this->getSql();
+
+        $heat_map = $db->rawQuery($query);
+
+        return $heat_map;
+
     }
 
     public function getVisitCount($company_id, $type) {
