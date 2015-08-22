@@ -21,6 +21,11 @@ abstract class BaseModel {
      */
     protected $sql;
 
+    /**
+     * @var array
+     */
+    protected $apiConfig;
+
 
     function __construct()
     {
@@ -51,5 +56,13 @@ abstract class BaseModel {
             $this->sql = new \MysqliDb ($dbConfig['mysql']['hostname'], $dbConfig['mysql']['user'], $dbConfig['mysql']['password'], $dbConfig['mysql']['database']);
         }
         return $this->sql;
+    }
+
+
+    public function getApiConfig() {
+        if($this->apiConfig == null){
+            $this->apiConfig = ApiConfig::getApiConfig();
+        }
+        return $this->apiConfig;
     }
 }

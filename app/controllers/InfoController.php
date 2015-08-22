@@ -8,9 +8,6 @@
 
 namespace app\controllers;
 
-
-use app\lib\contracts\ResponseInterface;
-use app\lib\JsonResponse;
 use app\models\InfoModel;
 use lib\ApiException;
 
@@ -26,9 +23,9 @@ class InfoController extends BaseController{
         $type = isset($_GET['type']) ? $_GET['type'] : 'day';
         $company_id = isset($_GET['company_id']) ? $_GET['company_id'] : 1;
         $info = $this->getInfoModel()->getVisitCount($company_id, $type);
-
         return $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), $info);
     }
+
 
     public function store($data) {
 
