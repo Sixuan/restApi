@@ -14,12 +14,12 @@ use lib\ApiException;
 class InfoModel extends BaseModel{
 
 
-    public function insertCountHeatmap($data) {
+    public function insertCountHeatmap($json_data) {
 
-        $data = json_decode($data);
+        $data = json_decode($json_data);
 
         if(!isset($data->device_id)){
-            throw new ApiException('Device id is not defined.', array('data' => $data));
+            throw new ApiException('Device id is not defined.', array('data' => $json_data));
         }
 
         $insert = Array (
@@ -44,6 +44,25 @@ class InfoModel extends BaseModel{
 
         return $i;
 
+    }
+
+    public function getHeatMap($company_id, $timestamp) {
+        $time = date('Y-m-d H:i:s', $timestamp);
+        $apiConfig = $this->getApiConfig();
+        $time_one_hour_ago = date('Y-m-d H:i:s', ($timestamp - $apiConfig['heatmap']['threshold']));
+        $query = "SELECT
+                            SUM(VT.NUM) AS 'TOTAL_COUNT',
+                            VT.DEVICE_ID
+                            FROM VISIT_COUNT VT
+                            JOIN DEVICE D ON (VT.DEVICE_ID = D.DEVICE_ID)
+                            WHERE D.COMPANY_ID = ".(int)$company_id."
+                            AND TIME_VISITED BETWEEN '".$time_one_hour_ago."' AND '".$time."' GROUP BY VT.DEVICE_ID";
+
+        $db = $this->getSql();
+
+        $users = $db->rawQuery($query);
+
+        return $users;
     }
 
     public function getVisitCount($company_id, $type) {
