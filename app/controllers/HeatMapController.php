@@ -25,7 +25,11 @@ class HeatMapController extends BaseController{
         }else{
             $time = $_GET['timestamp'];
             $company_id = isset($_GET['company_id']) ? $_GET['company_id'] : 1;
-            $heat_map = $this->getInfoModel()->getHeatMap($company_id, $time);
+            if(isset($_GET['device_id'])){
+                $heat_map = $this->getInfoModel()->getHeatMapForDevice($company_id, $time, $_GET['device_id']);
+            }else{
+                $heat_map = $this->getInfoModel()->getHeatMap($company_id, $time);
+            }
             $response = $this->buildResponse(self::STATUS_CODE_SUCCESS, array(), $heat_map);
         }
         return $response;
