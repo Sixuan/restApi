@@ -22,9 +22,16 @@ class InfoModel extends BaseModel{
             throw new ApiException('Device id is not defined.', array('data' => $json_data));
         }
 
+        if($data->timestamp) {
+            $time = date('Y-m-d H:i:s', $data->timestamp);
+        }else{
+            $time = date('Y-m-d H:i:s', time());
+        }
+
         $insert = Array (
             "DEVICE_ID" => $data->device_id,
-            "NUM" => $data->count
+            "NUM" => $data->count,
+            'TIME_VISITED' => $time
         );
 
         $heat_map = $data->heat_map;
@@ -37,6 +44,7 @@ class InfoModel extends BaseModel{
                         'POSITION_X'    => $h->x,
                         'POSITION_Y'    => $h->y,
                         'POSITION_VALUE'    => $h->v,
+                        'TIME_CREATED' => $time
                     )
                 );
             }
