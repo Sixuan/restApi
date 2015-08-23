@@ -121,7 +121,7 @@ class InfoModel extends BaseModel{
                             FROM VISIT_COUNT VT
                             JOIN DEVICE D ON (VT.DEVICE_ID = D.DEVICE_ID)
                             WHERE D.COMPANY_ID = ".(int)$company_id."
-                            AND TIME_VISITED BETWEEN '".$yesterday." 00:00:00' AND NOW() GROUP BY DATE(TIME_VISITED)";
+                            AND TIME_VISITED BETWEEN '".$yesterday." 00:00:00' AND NOW() GROUP BY DATE(TIME_VISITED), HOUR(TIME_VISITED)";
                 break;
         }
 
