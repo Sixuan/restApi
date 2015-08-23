@@ -103,7 +103,12 @@ class InfoModel extends BaseModel{
 
         switch($type){
             case 'week':
-                $last_monday = date('Y-m-d', strtotime("last Monday"));
+                if(date('D', time()) == 'Sun'){
+                    $last = strtotime("last Monday") - 7 * 24 * 60 * 60;
+                    $last_monday = date('Y-m-d', $last);
+                }else{
+                    $last_monday = date('Y-m-d', strtotime("last Monday"));
+                }
                 $query = "SELECT SUM(VT.NUM) AS 'TOTAL_COUNT',
                             DATE(VT.TIME_VISITED) AS 'DATE_TIME'
                             FROM VISIT_COUNT VT
@@ -119,6 +124,7 @@ class InfoModel extends BaseModel{
                             JOIN DEVICE D ON (VT.DEVICE_ID = D.DEVICE_ID)
                             WHERE D.COMPANY_ID = ".(int)$company_id."
                             AND TIME_VISITED BETWEEN '".$first_day_of_last_month." 00:00:00' AND NOW() GROUP BY DATE(TIME_VISITED)";
+
                 break;
             case 'day':
             default:
