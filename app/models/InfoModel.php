@@ -149,7 +149,6 @@ class InfoModel extends BaseModel{
                             WHERE D.COMPANY_ID = ".(int)$company_id."
                             AND TIME_VISITED BETWEEN '".$last_monday." 00:00:00' AND NOW() GROUP BY DATE(TIME_VISITED)";
 
-                print $query;
                 break;
             case 'month':
                 $first_day_of_last_month = date('Y-m-d', strtotime("first day of last month"));
