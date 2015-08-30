@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * DeviceController takes scene photo from device and saves it into db
  * User: sixuan
  * Date: 8/29/15
  * Time: 1:33 PM
