@@ -13,6 +13,39 @@ use lib\ApiException;
 
 class InfoModel extends BaseModel{
 
+    public function storeDeviceScene($json_data) {
+
+        $data = json_decode($json_data);
+        $post = $_POST;
+
+        if(!isset($post['device_id'])){
+            throw new ApiException('Device id is not defined.', array('data' => $post));
+        }
+
+        $device_id = $post['device_id'];
+        if($_FILES["picture"]["error"] == UPLOAD_ERR_OK){
+            $tmp_name = $_FILES["picture"]["tmp_name"];
+            $path_info = $this->pathinfo_im($_FILES["picture"]["name"]);
+            $extension = $path_info['extension'];
+            $destination = "/var/www/wikkitImages/deviceScene/device_".$device_id."_".time()."_.".$extension;
+            move_uploaded_file($tmp_name, $destination);
+            $db = $this->getSql();
+            $update = $db->where('DEVICE_ID', $device_id)->update('DEVICE', array('SCENE_IMG' => $destination));
+            return $update;
+        }
+
+        return false;
+    }
+
+    private function pathinfo_im($path) {
+
+        $tab = pathinfo($path);
+
+        $tab["basenameWE"] = substr($tab["basename"],0
+            ,strlen($tab["basename"]) - (strlen($tab["extension"]) + 1) );
+
+        return $tab;
+    }
 
     public function insertCountHeatmap($json_data) {
 
@@ -115,6 +148,8 @@ class InfoModel extends BaseModel{
                             JOIN DEVICE D ON (VT.DEVICE_ID = D.DEVICE_ID)
                             WHERE D.COMPANY_ID = ".(int)$company_id."
                             AND TIME_VISITED BETWEEN '".$last_monday." 00:00:00' AND NOW() GROUP BY DATE(TIME_VISITED)";
+
+                print $query;
                 break;
             case 'month':
                 $first_day_of_last_month = date('Y-m-d', strtotime("first day of last month"));
