@@ -40,10 +40,8 @@ class InfoModel extends BaseModel{
     private function pathinfo_im($path) {
 
         $tab = pathinfo($path);
-
         $tab["basenameWE"] = substr($tab["basename"],0
             ,strlen($tab["basename"]) - (strlen($tab["extension"]) + 1) );
-
         return $tab;
     }
 
@@ -115,7 +113,8 @@ class InfoModel extends BaseModel{
                             POSITION_Y,
                             POSITION_VALUE,
                             H.TIME_CREATED,
-                            H.DEVICE_ID
+                            H.DEVICE_ID,
+                            D.SCENE_IMG
                             FROM HEAT_MAP_DATA H
                             JOIN DEVICE D ON (H.DEVICE_ID = D.DEVICE_ID)
                             WHERE D.COMPANY_ID = ".(int)$company_id."
